@@ -2,17 +2,19 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: "babel-eslint",
   },
-  extends: [
-    '@nuxtjs',
-    'plugin:nuxt/recommended'
-  ],
-  plugins: [
-  ],
+  extends: ["@nuxtjs", "plugin:nuxt/recommended", "prettier"],
+  plugins: ["prettier"],
   // add your custom rules here
-  rules: {}
-}
+  rules: {
+    "comma-dangle": ["error", "always-multiline"],
+    "prettier/prettier": "error",
+  },
+  typeAcquisition: {
+    exclude: ["dotenv"],
+  },
+};

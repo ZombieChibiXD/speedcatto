@@ -4,15 +4,14 @@ The moment you start dealing with user session, you'll notice that protected rou
 
 `npm install --save express-session`
 
-
 ## create middleware/ssr-cookie.js
 
 ```js
-import axios from '~plugins/axios'
+import axios from "~plugins/axios";
 
-export default function({isServer, req}) {
+export default function ({ isServer, req }) {
   if (isServer) {
-    axios.defaults.headers.common.cookie = req.headers.cookie
+    axios.defaults.headers.common.cookie = req.headers.cookie;
   }
 }
 ```
@@ -21,7 +20,6 @@ export default function({isServer, req}) {
 
 ```js
 router: {
-  middleware: ['ssr-cookie']
+  middleware: ["ssr-cookie"];
 }
 ```
-
