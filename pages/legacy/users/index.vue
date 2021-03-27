@@ -18,15 +18,15 @@
 <script>
 export default {
   async asyncData({ $http }) {
-    const data = await $http.$get("/api/users");
-    return { users: data };
+    const data = await $http.$get('/api/users')
+    return { users: data }
   },
   head() {
     return {
-      title: "Users",
-    };
+      title: 'Users',
+    }
   },
-};
+}
 </script>
 
 <style scoped>

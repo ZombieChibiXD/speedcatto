@@ -2,7 +2,8 @@
   <section class="section">
     <div class="columns is-mobile">
       <card title="Free" icon="github">
-        Open source on <a href="https://github.com/buefy/buefy"> GitHub </a>
+        Open source on
+        <a href="https://github.com/buefy/buefy"> GitHub </a>
       </card>
 
       <card title="Responsive" icon="cellphone-link">
@@ -22,13 +23,13 @@
 </template>
 
 <script>
-import Card from "~/components/Card";
+import Card from '~/components/Card'
 
 export default {
-  name: "HomePage",
+  name: 'HomePage',
 
   components: {
     Card,
   },
-};
+}
 </script>
