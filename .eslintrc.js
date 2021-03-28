@@ -1,4 +1,5 @@
-import prettierConfig from './.prettierrc.json';
+// import prettierConfig from './.prettierrc.json';
+const prettierConfig = require('./.prettierrc.json')
 module.exports = {
   root: true,
   env: {
@@ -8,14 +9,16 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
-  extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
+  extends: [
+    '@nuxtjs',
+    'plugin:nuxt/recommended',
+    'prettier',
+    // 'plugin:nuxt/recommended',
+  ],
   plugins: ['prettier'],
   // add your custom rules here
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
-    'prettier/prettier': [
-      'error',
-      prettierConfig
-    ],
+    'prettier/prettier': ['error', prettierConfig],
   },
 }

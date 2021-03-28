@@ -10,13 +10,13 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'speedcatto',
+    htmlAttrs: {
+      lang: 'en',
+    },
     meta: [
       { charset: 'utf-8' },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
@@ -57,6 +57,12 @@ export default {
   modules: [
     // Doc: https://http.nuxtjs.org
     '@nuxt/http',
+
+    // Simple usage
+    'nuxt-buefy',
+
+    // Or you can customize
+    // ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
 
   /*
