@@ -14,6 +14,8 @@
     "@nuxt/http": "latest",
     "discord.js": "^12.5.1",
     "express": "latest",
+    "extract-zip": "^2.0.1",
+    "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "nuxt": "latest",
     "nuxt-buefy": "^0.4.4"

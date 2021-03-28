@@ -88,3 +88,8 @@ sw.*
 
 # Vim swap files
 *.swp
+
+
+# File upload and storage folders
+download
+images
