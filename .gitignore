@@ -93,3 +93,6 @@ sw.*
 # File upload and storage folders
 download
 images
+
+# Configs and env files
+env.js

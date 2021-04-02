@@ -17,6 +17,7 @@
     "extract-zip": "^2.0.1",
     "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.2",
     "nuxt": "latest",
     "nuxt-buefy": "^0.4.4"
   },
