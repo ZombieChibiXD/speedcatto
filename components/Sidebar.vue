@@ -7,10 +7,13 @@
     :overlay="sidebarStore.overlay"
   >
     <div class="p-1">
-      <img
-        src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-        alt="Lightweight UI components for Vue.js based on Bulma"
-      />
+      <b-menu class="container">
+        <img
+          src="https://cdn.discordapp.com/attachments/823858846899503136/827779054090190849/speedcat.gif"
+          alt="Speedcatto sidebar image"
+          style="height: 170px; flex-grow: 1"
+        />
+      </b-menu>
       <b-menu>
         <b-menu-list>
           <b-menu-item
@@ -18,8 +21,7 @@
             icon="close"
             type="is-light"
             @click="closeSidebar"
-          >
-          </b-menu-item>
+          />
         </b-menu-list>
         <b-menu-list icon="book-open" label="Series">
           <b-menu-item icon="star" label="Featured" disabled />
@@ -64,18 +66,6 @@ export default {
       fullheight: true,
       fullwidth: false,
       right: false,
-      items: [
-        {
-          title: 'Home',
-          icon: 'home',
-          to: { name: 'index' },
-        },
-        {
-          title: 'Login',
-          icon: 'account-key',
-          to: { name: 'login' },
-        },
-      ],
     }
   },
   computed: {
