@@ -27,10 +27,17 @@
           <b-menu-item icon="star" label="Featured" disabled />
           <b-menu-item icon="bookshelf" label="Library" />
           <b-menu-item icon="book" label="Following" />
-          <b-menu-item icon="book-search" label="Search" disabled>
+          <b-menu-item icon="book-search">
+            <template #label="props">
+              Search
+              <b-icon
+                class="is-pulled-right"
+                :icon="!props.expanded ? 'chevron-down' : 'chevron-up'"
+              />
+            </template>
             <b-field message="What do you want to search?">
               <b-input
-                placeholder="Search series..."
+                placeholder="Quick search..."
                 type="search"
                 custom-class="is-small"
                 expanded
@@ -40,6 +47,7 @@
                 <b-button type="is-primary is-small" icon-right="magnify" />
               </p>
             </b-field>
+            <b-menu-item icon="magnify" label="Advanced Search" />
           </b-menu-item>
         </b-menu-list>
         <b-menu-list v-if="true" icon="account-circle" label="Account">
