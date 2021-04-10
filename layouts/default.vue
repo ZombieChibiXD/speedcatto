@@ -67,3 +67,12 @@ export default {
   justify-content: center;
 }
 </style>
+
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-image: none;
+}
+</style>

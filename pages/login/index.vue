@@ -141,9 +141,6 @@ export default {
 }
 </script>
 <style>
-html {
-  background-image: none;
-}
 .login-bg {
   background-image: url('https://cdn.discordapp.com/attachments/823858846899503136/825489432177147934/2047298.png');
   background-size: cover;
