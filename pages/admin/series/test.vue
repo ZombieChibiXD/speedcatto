@@ -40,7 +40,9 @@
     </section>
     <section class="content-top">&nbsp;</section>
     <section class="mid-section">
-      <div class="box admin-series-item-scroll has-background-light px-5 pb-5">
+      <div
+        class="box is-full admin-series-item-scroll has-background-light px-5 pb-5"
+      >
         <div v-if="data.length > 0" class="wrapper">
           <div
             v-for="item in data"
@@ -73,7 +75,7 @@
                       By: Grin-p writer
                     </p>
                   </div>
-                  <b-tag-taglist class="tags">
+                  <b-taglist class="tags">
                     <b-tag type="is-primary is-light">
                       <b-icon icon="eye" size="is-small"></b-icon> &nbsp; 10000
                     </b-tag>
@@ -85,8 +87,8 @@
                       <b-icon icon="star" type="is-warning" size="is-small" />
                       &nbsp; 8.5
                     </b-tag>
-                  </b-tag-taglist>
-                  <b-tag-taglist class="tags">
+                  </b-taglist>
+                  <b-taglist class="tags">
                     <b-tag style="background: transparent">Tags:</b-tag>
                     <b-tag>Tag label3</b-tag>
                     <b-tag>Tag label4</b-tag>
@@ -98,7 +100,7 @@
                     <b-tag>Tag label</b-tag>
                     <b-tag>Tag label</b-tag>
                     <b-tag>Tag label</b-tag>
-                  </b-tag-taglist>
+                  </b-taglist>
                   <p class="subtitle is-7">
                     {{
                       item.overview.substring(0, overviewLimit).trim() +
@@ -134,7 +136,7 @@
           </div>
         </div>
         <div v-else class="columns">
-          <div class="column card is-one-third mt-5">
+          <div class="column card is-one-third is-offset-one-third mt-5">
             <p class="has-text-centered">Th ere is no data here</p>
           </div>
         </div>
@@ -162,7 +164,6 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce'
 function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -171,6 +172,7 @@ export default {
     return {
       overviewLimit: 200,
       inputBox: '',
+      defaultName: 'A',
       name: '',
       data: [],
       selected: null,
@@ -182,58 +184,69 @@ export default {
       rangeBefore: 2,
       rangeAfter: 2,
       scroller: {},
+      timeoutHelper: {},
     }
   },
   watch: {
     page(val) {
-      this.onPageChange()
+      clearTimeout(this.timeoutHelper.page)
+      this.timeoutHelper.page = setTimeout(
+        function () {
+          this.isFetching = true
+          if (this.scroller.content)
+            this.scroller.content.scrollIntoView({ behavior: 'smooth' })
+          this.getAsyncData().finally(
+            function () {
+              this.isFetching = false
+            }.bind(this),
+          )
+        }.bind(this),
+        200,
+      )
+    },
+    name(val) {
+      this.page = 1
+      this.totalItems = 1
+      this.totalPages = 1
+      this.getAsyncData().finally(() => {
+        this.isFetching = false
+      })
     },
   },
   mounted() {
-    ;(async () => {
-      this.isFetching = true
-      await this.inputAsyncCall()
-      await timeout(100)
-      this.isFetching = false
-      this.scroller.content = this.$el.getElementsByClassName(
-        'admin-series-item-scroll',
-      )[0]
-    })()
+    this.isFetching = true
+    this.getAsyncData().finally(
+      async function () {
+        this.scroller.content = this.$el.getElementsByClassName(
+          'admin-series-item-scroll',
+        )[0]
+        await timeout(100)
+        this.isFetching = false
+      }.bind(this),
+    )
   },
   methods: {
     onInput() {
       this.isFetching = true
-      this.onInputDone()
-    },
-    onInputDone: debounce(async function () {
-      await this.inputAsyncCall(this.inputBox)
-      this.isFetching = false
-    }, 100),
-    onPageChange: debounce(async function () {
-      this.isFetching = true
-      if (this.scroller.content)
-        this.scroller.content.scrollIntoView({ behavior: 'smooth' })
-      await this.getAsyncData()
-      this.isFetching = false
-    }, 200),
-    inputAsyncCall(name) {
-      // String update
-      if (this.name !== name) {
-        this.name = name || 'A'
-        this.page = 1
-        this.totalItems = 1
-        this.totalPages = 1
-      }
-      return this.getAsyncData()
+      clearTimeout(this.timeoutHelper.name)
+      this.timeoutHelper.name = setTimeout(
+        function () {
+          this.name = this.inputBox
+        }.bind(this),
+        200,
+      )
     },
     async getAsyncData() {
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${this.name}&page=${this.page}`
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${
+        this.name || this.defaultName
+      }&page=${this.page}`
       const result = await this.$http.$get(url)
       this.data = []
       const data = result
       data.results.forEach((item) => this.data.push(item))
       this.totalPages = data.total_pages
       this.totalItems = data.total_results
+      return result
     },
   },
 }
@@ -253,6 +266,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
   }
   .end-section {
     display: none;
