@@ -12,6 +12,7 @@ class SCAFFOLD extends mongoose.Document {
   /** @type {String}  */ authToken
   /** @type {String}  */ biography
   /** @type {String}  */ image
+  /** @type {String}  */ permission
   /** @type {Date}    */ createdAt
   /** @type {Date}    */ updatedAt
 }
@@ -25,6 +26,7 @@ const SCHEMA = new Schema({
   authToken: { type: String, default: '' },
   biography: { type: String, default: '' },
   image: { type: String, default: '' },
+  role: { type: String, default: 'Member' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 })
