@@ -50,7 +50,7 @@ const addSeriesToGenre = function (genreId, series) {
 
 const getSeriesWithGenres = function (id) {
   return Series.MODEL.findById(id).populate(Genre.NAME)
-};
+}
 
 const getGenresWithSeries = function (id) {
   return Genre.MODEL.findById(id).populate(Series.NAME)
@@ -124,5 +124,8 @@ const something = async function () {
     console.log(item.genres.toString())
   }
 }
-something()
+setTimeout(async () => {
+  await run()
+  await something()
+}, 1000)
 // EOF

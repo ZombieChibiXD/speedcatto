@@ -54,7 +54,7 @@
                 <div class="media-left">
                   <div style="width: 10rem">
                     <b-image
-                      :src="`https://image.tmdb.org/t/p/w200/${item.poster_path}`"
+                      :src="`${item.image}`"
                       :alt="`${item.title}'s image`"
                       ratio="2by3"
                       lazy
@@ -77,29 +77,23 @@
                   </div>
                   <b-taglist class="tags">
                     <b-tag type="is-primary is-light">
-                      <b-icon icon="eye" size="is-small"></b-icon> &nbsp; 10000
+                      <b-icon icon="eye" size="is-small"></b-icon> &nbsp;
+                      {{ item.meta.view }}
                     </b-tag>
                     <b-tag type="is-info is-light">
                       <b-icon icon="bookmark" size="is-small"></b-icon>&nbsp;
-                      10000
+                      {{ item.meta.bookmark }}
                     </b-tag>
                     <b-tag type="is-warning is-light">
                       <b-icon icon="star" type="is-warning" size="is-small" />
-                      &nbsp; 8.5
+                      {{ item.meta.rating }}
                     </b-tag>
                   </b-taglist>
                   <b-taglist class="tags">
                     <b-tag style="background: transparent">Tags:</b-tag>
-                    <b-tag>Tag label3</b-tag>
-                    <b-tag>Tag label4</b-tag>
-                    <b-tag>Tag label5</b-tag>
-                    <b-tag>Tag </b-tag>
-                    <b-tag>Tag label</b-tag>
-                    <b-tag>Tag label</b-tag>
-                    <b-tag>Tag label</b-tag>
-                    <b-tag>Tag label</b-tag>
-                    <b-tag>Tag label</b-tag>
-                    <b-tag>Tag label</b-tag>
+                    <b-tag v-for="tag in item.genres" :key="tag">
+                      {{ tag }}
+                    </b-tag>
                   </b-taglist>
                   <p class="subtitle is-7">
                     {{
@@ -237,12 +231,45 @@ export default {
       )
     },
     async getAsyncData() {
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${
-        this.name || this.defaultName
-      }&page=${this.page}`
-      const result = await this.$http.$get(url)
+      // const url = `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${
+      //   this.name || this.defaultName
+      // }&page=${this.page}`
+      // const result = await this.$http.$get(url)
+      const result = await timeout(10)
       this.data = []
-      const data = result
+      const data = {
+        page: this.page,
+        results: [],
+        total_pages: 10,
+        total_results: 100,
+      }
+      for (
+        let i = 1 + (this.page - 1) * 10;
+        i <= 10 + (this.page - 1) * 10;
+        i++
+      ) {
+        const item = {
+          title: 'Series title ' + i,
+          author: 'Series Author',
+          overview:
+            'Series overview that is very long and very elaborate and et ,cetteraSeries overview that is very long and very elaborate and et ,cetteraSeries overview that is very long and very elaborate and et ,cetteraSeries overview that is very long and very elaborate and et ,cettera',
+          image:
+            'https://image.tmdb.org/t/p/w200//htTS07IvYv3rv57ftzNEprefwSq.jpg',
+          genres: [],
+          meta: {
+            view: Math.round(Math.random() * 100000).toLocaleString(),
+            bookmark: Math.round(Math.random() * 100000).toLocaleString(),
+            rating: (Math.random() * 10).toString().substring(0, 4),
+          },
+        }
+        const limit = Math.random() * (15 - 2) + 2
+        for (let index = 0; index < limit; index++)
+          item.genres.push(
+            btoa(20 * Math.random()).substring(0, Math.random() * 10 + 5),
+          )
+
+        data.results.push(item)
+      }
       data.results.forEach((item) => this.data.push(item))
       this.totalPages = data.total_pages
       this.totalItems = data.total_results
