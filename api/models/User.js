@@ -26,7 +26,7 @@ const SCHEMA = new Schema({
   authToken: { type: String, default: '' },
   biography: { type: String, default: '' },
   image: { type: String, default: '' },
-  role: { type: String, default: 'Member' },
+  permission: { type: String, default: 'Member' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 })

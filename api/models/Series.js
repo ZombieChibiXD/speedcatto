@@ -107,6 +107,14 @@ const SCHEMA = new Schema({
       return generateTitleShorthand(this.title)
     },
   },
+  // Please turn this into an array in the future so that if example the shorthand
+  // is changed for some good reason (humans am I right...) and some people bookmarked
+  // the old seriesID as the URL to the series, they will still be directed here
+  // and everything is nice and cool, and everything in between.
+  // the newest seriesID would be used as URL though.¥
+  // ----------------------------------------------------
+  // OH, prevent, no... [ REFRAIN ] FROM using seriesID as IDs in backend, this is
+  // ONLY USED FOR URL AND CLIENT PURPOSES!
   seriesID: {
     type: String,
     index: true,
@@ -128,6 +136,11 @@ const SCHEMA = new Schema({
         }
         return newArr
       }
+      // This ~may~ will(?) have an error in the parsec future, which means
+      // very far into the future, because space and time is connected.
+      // But the point is that, while this will cause an error in that time
+      // the database is built so that if this error happens, you'll just
+      // need to re-upload / rename the seriesID, and you'd be perfectly fine
       const dateServe = getShuffledArr(
         date.getTime().toString().split(''),
       ).join('')
