@@ -1,6 +1,6 @@
 <template>
   <b-sidebar
-    :open.sync="sidebarStore.status"
+    :open.sync="status"
     type="is-light"
     :fullheight="sidebarStore.fullheight"
     mobile="fullWidth"
@@ -83,10 +83,22 @@ export default {
     sidebarStatus() {
       return this.$store.state.sidebar.status
     },
+    status: {
+      get() {
+        return this.sidebarStore.status
+      },
+      set(newValue) {
+        if (!newValue) this.closeSidebar()
+        else this.openSidebar()
+      },
+    },
   },
   methods: {
     closeSidebar() {
       this.$store.commit('sidebar/closeSidebar')
+    },
+    openSidebar() {
+      this.$store.commit('sidebar/openSidebar')
     },
   },
 }
