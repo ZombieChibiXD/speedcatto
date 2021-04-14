@@ -8,7 +8,7 @@ const Chapter = require('./Chapter')
 const NAME = 'Comment'
 
 class SCAFFOLD extends mongoose.Document {
-  /** @type {(Series.SCAFFOLD|Chapter.SCAFFOLD)}  */ on
+  /** @type {(Series.SCAFFOLD|Chapter.SCAFFOLD)}  */ of
   /** @type {string}  */ commenter
   /** @type {string}  */ content
   /** @type {Date}    */ createdAt
@@ -16,7 +16,7 @@ class SCAFFOLD extends mongoose.Document {
 }
 
 const SCHEMA = new Schema({
-  on: {
+  of: {
     type: Schema.Types.ObjectId,
     required: true,
     refPath: 'onThread',

@@ -120,30 +120,17 @@ const SCHEMA = new Schema({
     index: true,
     unique: true,
     default() {
+      /**
+       * @type {Date}
+       */
       const date = this.createdAt || Date.now()
       const shorthand =
         this.titleShorthand || generateTitleShorthand(this.title) || ''
-      /**
-       *
-       * @param {Array} arr
-       * @returns {Array}
-       */
-      const getShuffledArr = (arr) => {
-        const newArr = arr.slice()
-        for (let i = newArr.length - 1; i > 0; i--) {
-          const rand = Math.floor(Math.random() * (i + 1))
-          ;[newArr[i], newArr[rand]] = [newArr[rand], newArr[i]]
-        }
-        return newArr
-      }
-      // This ~may~ will(?) have an error in the parsec future, which means
-      // very far into the future, because space and time is connected.
-      // But the point is that, while this will cause an error in that time
-      // the database is built so that if this error happens, you'll just
-      // need to re-upload / rename the seriesID, and you'd be perfectly fine
-      const dateServe = getShuffledArr(
-        date.getTime().toString().split(''),
-      ).join('')
+
+      const dateServe = parseInt(
+        date.getTime().toString(36).split('').reverse().join(''),
+        36,
+      ).toString()
 
       return `${shorthand}-${dateServe}`
     },

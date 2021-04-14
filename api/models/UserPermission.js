@@ -23,7 +23,7 @@ const permission = {
   TROLLED: 1 << 9,
 }
 Object.freeze(permission)
-export default permission
+module.exports = permission
 // const {
 //   ADMINISTRATOR,
 //   SERIES_MANAGE,
