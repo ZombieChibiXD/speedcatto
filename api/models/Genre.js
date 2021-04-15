@@ -39,5 +39,10 @@ SCHEMA.methods.slugify = function () {
 }
 
 const MODEL = mongoose.model(NAME, SCHEMA)
+const create = function () {
+  /** @type {DOCUMENT} */
+  const constructor = new MODEL()
+  return constructor
+}
 
-module.exports = { NAME, SCHEMA, MODEL, SCAFFOLD }
+module.exports = { NAME, SCHEMA, MODEL, SCAFFOLD, create }

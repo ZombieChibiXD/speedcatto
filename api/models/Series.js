@@ -150,6 +150,15 @@ const SCHEMA = new Schema({
   updatedAt: { type: Date, default: Date.now },
 })
 
-const MODEL = mongoose.model(NAME, SCHEMA)
+SCHEMA.methods.addGenre = function (genre){
+    this.genres.push(genre._id)
+}
 
-module.exports = { NAME, SCHEMA, MODEL, SCAFFOLD }
+const MODEL = mongoose.model(NAME, SCHEMA)
+const create = function () {
+  /** @type {DOCUMENT} */
+  const constructor = new MODEL()
+  return constructor
+}
+
+module.exports = { NAME, SCHEMA, MODEL, SCAFFOLD, create }
