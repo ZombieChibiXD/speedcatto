@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const slug = require('slug')
 const { Schema } = mongoose
 const Chapter = require('./Chapter')
 const Genre = require('./Genre')
@@ -101,12 +102,7 @@ function generateTitleShorthand(str) {
 
 const SCHEMA = new Schema({
   title: String,
-  titleShorthand: {
-    type: String,
-    default() {
-      return generateTitleShorthand(this.title)
-    },
-  },
+  titleShorthand: String,
   // Please turn this into an array in the future so that if example the shorthand
   // is changed for some good reason (humans am I right...) and some people bookmarked
   // the old seriesID as the URL to the series, they will still be directed here
@@ -119,28 +115,13 @@ const SCHEMA = new Schema({
     type: String,
     index: true,
     unique: true,
-    default() {
-      /**
-       * @type {Date}
-       */
-      const date = this.createdAt || Date.now()
-      const shorthand =
-        this.titleShorthand || generateTitleShorthand(this.title) || ''
-
-      const dateServe = parseInt(
-        date.getTime().toString(36).split('').reverse().join(''),
-        36,
-      ).toString()
-
-      return `${shorthand}-${dateServe}`
-    },
   },
   altTitle: [{ language: String, title: String }],
   author: String,
   overview: String,
   image: String,
   chapters: [{ type: Schema.Types.ObjectId, ref: Chapter.NAME }],
-  genres: [{ type: Schema.Types.ObjectId, ref: Genre.NAME }],
+  genres: [{ type: Schema.Types.ObjectId, ref: Genre.NAME, unique: true }],
   meta: {
     rating: { type: Number, default: 0 },
     bookmark: { type: Number, default: 0 },
@@ -149,9 +130,29 @@ const SCHEMA = new Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 })
+SCHEMA.pre('validate', function (next) {
+  if (!this.titleShorthand)
+    this.titleShorthand = generateTitleShorthand(this.title)
+  if (!this.seriesID) {
+    /**
+     * @type {Date}
+     */
+    const date = this.createdAt || Date.now()
+    const shorthand =
+      this.titleShorthand || generateTitleShorthand(this.title) || ''
 
-SCHEMA.methods.addGenre = function (genre){
-    this.genres.push(genre._id)
+    const dateServe = parseInt(
+      date.getTime().toString(36).split('').reverse().join(''),
+      36,
+    ).toString()
+
+    this.seriesID = `${slug(shorthand)}-${dateServe}`
+  }
+
+  next()
+})
+SCHEMA.methods.addGenre = function (genre) {
+  this.genres.push(genre._id)
 }
 
 const MODEL = mongoose.model(NAME, SCHEMA)
