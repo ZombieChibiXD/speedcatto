@@ -12,7 +12,7 @@
             <b-icon icon="menu" type="is-large" />
             &nbsp;&nbsp;&nbsp;
           </b-navbar-item>
-          <span class="navbar-branding" />
+          <div class="navbar-branding">&nbsp;</div>
           <b-navbar-item>
             <img
               src="https://media.discordapp.net/attachments/823858846899503136/827729560547360798/logo-2.png"
@@ -50,8 +50,12 @@ export default {
 </script>
 
 <style>
+.navbar-brand,
 .navbar-branding {
   flex-grow: 1;
   justify-content: center;
+}
+.navbar-menu {
+  display: none;
 }
 </style>
