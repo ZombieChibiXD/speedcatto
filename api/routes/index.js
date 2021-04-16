@@ -6,5 +6,6 @@ const express = require('express')
  */
 module.exports = function (app, extern) {
   require('./users')(app)
+  require('./series')(app)
   require('./test')(app) // This must be last!
 }

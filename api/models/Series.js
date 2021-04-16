@@ -155,6 +155,22 @@ SCHEMA.methods.addGenre = function (genre) {
   this.genres.push(genre._id)
 }
 
+SCHEMA.methods.toJSONFor = function (user) {
+  const jjjj = new SCAFFOLD()
+  return {
+    slug: jjjj.slug,
+    title: jjjj.title,
+    description: jjjj.description,
+    body: jjjj.body,
+    createdAt: jjjj.createdAt,
+    updatedAt: jjjj.updatedAt,
+    tagList: jjjj.tagList,
+    favorited: user ? user.isFavorite(jjjj._id) : false,
+    favoritesCount: jjjj.favoritesCount,
+    author: jjjj.author.toProfileJSONFor(user),
+  }
+}
+
 const MODEL = mongoose.model(NAME, SCHEMA)
 const create = function () {
   /** @type {DOCUMENT} */

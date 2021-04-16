@@ -110,16 +110,6 @@ setTimeout(async () => {
 // EOF
 
 async function run2() {
-  await mongoose.connect('mongodb://localhost/tester', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-
-  const db = mongoose.connection
-  db.on('error', console.error.bind(console, 'connection error:'))
-  db.once('open', function () {
-    console.log('Successfully connect to MongoDB.')
-  })
   let genre
   let series
   const genreIDs = []
