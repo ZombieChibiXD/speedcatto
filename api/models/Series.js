@@ -155,19 +155,18 @@ SCHEMA.methods.addGenre = function (genre) {
   this.genres.push(genre._id)
 }
 
-SCHEMA.methods.toJSONFor = function (user) {
-  const jjjj = new SCAFFOLD()
+SCHEMA.methods.toJSONFor = function () {
+  /** @type {SCAFFOLD} */
   return {
-    slug: jjjj.slug,
-    title: jjjj.title,
-    description: jjjj.description,
-    body: jjjj.body,
-    createdAt: jjjj.createdAt,
-    updatedAt: jjjj.updatedAt,
-    tagList: jjjj.tagList,
-    favorited: user ? user.isFavorite(jjjj._id) : false,
-    favoritesCount: jjjj.favoritesCount,
-    author: jjjj.author.toProfileJSONFor(user),
+    title: this.title,
+    seriesID: this.seriesID,
+    altTitle: this.altTitle,
+    author: this.author,
+    overview: this.overview,
+    image: this.image,
+    chapters: this.chapters,
+    genres: this.genres,
+    meta: this.meta,
   }
 }
 
