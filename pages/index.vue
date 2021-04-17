@@ -39,6 +39,7 @@
         </div>
         <div class="column"></div>
       </div>
+      <div style="height: 100px"></div>
       <div class="custom-shape-divider-bottom-1618380753">
         <svg
           data-name="Layer 1"
@@ -158,7 +159,7 @@ export default {
       gallery: false,
       al: {
         hasGrayscale: true,
-        itemsToShow: 5,
+        itemsToShow: 3,
         breakpoints: {
           768: {
             hasGrayscale: false,
