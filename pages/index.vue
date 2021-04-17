@@ -63,6 +63,7 @@
       <hr />
       <div class="p-5">
         <b-carousel
+          class="column is-10-desktop is-offset-1-desktop"
           :autoplay="true"
           with-carousel-list
           :indicator="false"
@@ -74,13 +75,16 @@
                 <div class="columns is-gapless is-mobile">
                   <div class="column is-hidden-tablet"></div>
                   <div class="column is-8-mobile">
-                    <figure class="image">
-                      <b-image
-                        style="max-height: 500px; width: auto; margin: auto"
-                        :src="item.image"
-                        src-fallback="http://placehold.it/700x1000"
-                      />
-                    </figure>
+                    <b-image
+                      placeholder="/loading.svg"
+                      ratio="3by4"
+                      :src="item.image"
+                      src-fallback="http://placehold.it/750x1200"
+                    >
+                      <template #placeholder>
+                        <Loading />
+                      </template>
+                    </b-image>
                     <div
                       class="columns is-mobile has-text-centered is-size-7 p-2 is-size-6-desktop"
                     >
@@ -116,7 +120,7 @@
             </div>
           </b-carousel-item>
           <template #list="props">
-            <b-carousel-list
+            <carousel-list
               v-model="props.active"
               :data="items"
               v-bind="al"
@@ -141,10 +145,12 @@
 </template>
 
 <script>
+import CarouselList from '~/components/CarouselList.vue'
+import Loading from '~/components/Loading.vue'
 export default {
   name: 'HomePage',
 
-  components: {},
+  components: { CarouselList, Loading },
   layout: 'default-no-container',
   data() {
     return {
@@ -171,33 +177,48 @@ export default {
             'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
         },
         {
-          title: 'Slide 1',
-          image:
-            'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/7200/10000?1',
         },
         {
-          title: 'Slide 1',
-          image: '',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?2',
         },
         {
-          title: 'Slide 1',
-          image:
-            'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?3',
         },
         {
-          title: 'Slide 1',
-          image:
-            'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?4',
         },
         {
-          title: 'Slide 1',
-          image:
-            'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?5',
         },
         {
-          title: 'Slide 1',
-          image:
-            'https://speedcatto.files.wordpress.com/2021/04/resource-2-1.jpg',
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?6',
+        },
+        {
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?7',
+        },
+        {
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?8',
+        },
+        {
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?9',
+        },
+        {
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?10',
+        },
+        {
+          title: 'Slide Other',
+          image: 'https://picsum.photos/720/1000?11',
         },
       ],
     }

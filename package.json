@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/http": "^0.6.4",
+    "buefy": "^0.9.6",
     "discord.js": "^12.5.3",
     "express": "latest",
     "extract-zip": "^2.0.1",
