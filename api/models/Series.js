@@ -167,6 +167,7 @@ SCHEMA.methods.toJSONFor = function () {
     chapters: this.chapters,
     genres: this.genres,
     meta: this.meta,
+    lastUpdated: this.updatedAt,
   }
 }
 
