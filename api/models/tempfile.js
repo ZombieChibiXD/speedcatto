@@ -196,3 +196,129 @@ async function run2() {
     console.log(item.toJSON())
   }
 }
+
+
+async function run2() {
+  let genre
+  let series
+  const genreIDs = []
+
+  genre = Genre.create()
+  genre.name = 'Shounen'
+  genre.description =
+    'Shounen, directly translated from japanese as `boys`, is a genre dedicated towards the male youth in Japan. The characteristic of this genre consist of action, a little bit of (a lot) echi, and various boyish centric stuff'
+  try {
+    await genre.save()
+  } catch (error) {
+    console.log(error)
+  }
+  genreIDs.push(genre)
+
+  genre = Genre.create()
+  genre.name = 'Shoujo'
+  genre.description =
+    'Shoujo, directly translated from Japanese as `girls`, is a genre dedicated towards the female youth in Japan. The characteristic of this genre consist of romance, cute stuffs, and various girlish centric stuffs'
+  try {
+    await genre.save()
+  } catch (error) {
+    console.log(error)
+  }
+  genreIDs.push(genre)
+
+  genre = Genre.create()
+  genre.name = 'Action'
+  genre.description =
+    'Action, is a genre that contains a lot of fighing or struggle in nature. This genre has quite the amount of fight scene and standoffs of characters in the story.'
+  try {
+    await genre.save()
+  } catch (error) {
+    console.log(error)
+  }
+  genreIDs.push(genre)
+
+  genre = Genre.create()
+  genre.name = 'Romance'
+  genre.description =
+    'Romance, a genre of love, where lovers exchange their feelings for one another, being in a relationship, or even getting married! Everything about heart-warming stories are in this genre!'
+  try {
+    await genre.save()
+  } catch (error) {
+    console.log(error)
+  }
+  genreIDs.push(genre)
+
+  series = Series.create()
+  series.title = 'My Love with you'
+  series.titleShorthand = 'MLwU'
+  series.author = 'Miyamazaki Atsushi'
+  series.overview =
+    'Tanaka, a highschooler, is having a rough time at school. Not good at sports, not that sociable, an example of a social outcast. What others did not know is Tanaka is talented in Woodcarving, a tradition from his family. This talent is then found out by his classmate, Himiko. Will love bloom between them for the same passion that they have?'
+  series.addGenre(genreIDs[3])
+  series.addGenre(genreIDs[2])
+  try {
+    await series.save()
+  } catch (error) {
+    console.log(error)
+  }
+  series = Series.create()
+  series.title = 'My Love with you 2'
+  series.author = 'Miyamazaki Atsushi'
+  series.overview =
+    'Tanaka, a highschooler, is having a rough time at school. Not good at sports, not that sociable, an example of a social outcast. What others did not know is Tanaka is talented in Woodcarving, a tradition from his family. This talent is then found out by his classmate, Himiko. Will love bloom between them for the same passion that they have?'
+  series.addGenre(genreIDs[1])
+  series.addGenre(genreIDs[3])
+  try {
+    await series.save()
+  } catch (error) {
+    console.log(error)
+  }
+  series = Series.create()
+  series.title = 'Naruto'
+  series.author = 'Miyamazaki Atsushi'
+  series.overview =
+    'Tanaka, a highschooler, is having a rough time at school. Not good at sports, not that sociable, an example of a social outcast. What others did not know is Tanaka is talented in Woodcarving, a tradition from his family. This talent is then found out by his classmate, Himiko. Will love bloom between them for the same passion that they have?'
+  series.addGenre(genreIDs[0])
+  series.addGenre(genreIDs[2])
+  try {
+    await series.save()
+  } catch (error) {
+    console.log(error)
+  }
+  console.log('Something')
+  const items = await Series.MODEL.find({})
+    .populate('genres', 'name -_id')
+    .exec()
+
+  for (const item of items) {
+    console.log(item.toJSON())
+  }
+}
+// run2()
+
+async function a() {
+  const query = {}
+  const searchQuery = 'o'
+  // const genreListInc = ['607a5e47ce954b88b6d87f61']
+  const genreListExc = undefined
+  const genreListInc = ['607a5e47ce954b88b6d87f61']
+  const page = 1
+  const perPage = 10
+
+  if (searchQuery) query.title = { $regex: new RegExp(searchQuery, 'i') }
+  if (genreListInc || genreListExc) query.genres = {}
+  if (genreListInc && genreListInc.length > 0) query.genres.$all = genreListInc
+  if (genreListExc && genreListExc.length > 0) query.genres.$nin = genreListExc
+  console.log(query)
+  const data = await Series.MODEL.find(query)
+    .populate('genres', 'name slug -_id')
+    .sort({ title: 'asc' })
+    .limit(perPage)
+    .skip(perPage * (page - 1))
+    .exec()
+  const result = []
+  data.forEach((item) => {
+    console.log(item.toJSONFor())
+    result.push(item.toJSONFor())
+  })
+  return result
+}
