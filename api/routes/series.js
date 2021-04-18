@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const express = require('express')
+const upload = require('../config/multer')
 const { Series } = require('../models/index')
 
 const sortQuery = {
@@ -64,11 +65,11 @@ async function getSeriesList(
  * @param { express.Express } app
  */
 module.exports = function (app) {
-  /* GET users listing. */
-  app.get('/series/:page?', async function (req, res, next) {
+  /* GET Series listing. */
+  app.get('/series/:page?', async (req, res, next) => {
     try {
       const page =
-        parseFloat(req.params.page) > 0 ? parseInt(req.params.page) : 1
+        parseFloat(req.params.page) > 0 ? parseFloat(req.params.page) : 1
       const perPage =
         parseInt(req.query.per_page || req.query.perPage) > 0
           ? parseInt(req.query.per_page || req.query.perPage)
@@ -78,10 +79,30 @@ module.exports = function (app) {
         Object.keys(sortQuery)[parseInt(req.query.sort)] ||
         req.query.sort ||
         'TITLE_ASC'
-      console.log(sortBy);
       res.json(
         await getSeriesList(page, searchQuery, null, null, perPage, sortBy),
       )
+    } catch (error) {
+      res.status(500).json({
+        message: 'Unexpected error occured!',
+        // error: error.toString,
+      })
+      throw error
+    }
+  })
+  /* POST Series create */
+  app.post('/series', upload.single('cover'), async (req, res, next) => {
+    try {
+      const series = Series.create()
+      series.title = ''
+      series.titleShorthand = ''
+      series.altTitle = []
+      series.author = ''
+      series.overview = ''
+      series.image = ''
+      series.genres = []
+      // await series.save()
+      await res.json(req.body)
     } catch (error) {
       res.status(500).json({
         message: 'Unexpected error occured!',

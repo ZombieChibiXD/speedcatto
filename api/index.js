@@ -17,6 +17,8 @@ db.once('open', function () {
   console.log('Successfully connect to MongoDB.')
 })
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 // Routes conntection
 require('./routes')(app)
 

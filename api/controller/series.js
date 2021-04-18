@@ -1,13 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-const { Db } = require('mongodb')
-
-// Functions
+const express = require('express')
+/**
+ * @typedef RouterHandler
+ * @type {import('express').RequestParamHandler}
+ */
 
 /**
- * @param {Db} db Database variable
+ * @type {RouterHandler}
  */
-function getSeries(db) {
-  return db.collection('series')
-}
-
-// Testing
+let a = function (req , res,next,) {
+};

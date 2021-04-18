@@ -172,8 +172,12 @@ SCHEMA.methods.toJSONFor = function () {
 }
 
 const MODEL = mongoose.model(NAME, SCHEMA)
+
+/**
+ *
+ * @returns {SCAFFOLD} New series document
+ */
 const create = function () {
-  /** @type {DOCUMENT} */
   const constructor = new MODEL()
   return constructor
 }
